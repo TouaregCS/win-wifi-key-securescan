@@ -3,17 +3,23 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Virtuální prostředí
 .venv/
-env/
+venv/
 
-# Build/pyinstaller výstupy
+# Build artifacts
 dist/
 build/
 *.spec
-*.exe
 
-# Systémové soubory
-.DS_Store
+# Sensitive / local files
+*.pem
+*.pfx
+*.key
+*.env
+wifi_passwords.txt
+wifi_passwords.txt.encrypted
+*.log
+
+# OS
 Thumbs.db
+.DS_Store
