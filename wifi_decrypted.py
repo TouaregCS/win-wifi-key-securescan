@@ -63,6 +63,8 @@ def main():
     except Exception as e:
         print("Chyba při dešifrování:", e, file=sys.stderr)
         sys.exit(3)
+    input("Stiskni Enter pro ukončení...")
+    return
 
     # Plaintext je bajtový obsah (utf-8). Pokusíme se dekódovat pro čitelné zobrazení.
     try:
