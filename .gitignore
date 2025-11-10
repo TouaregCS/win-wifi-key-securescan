@@ -19,6 +19,7 @@ build/
 wifi_passwords.txt
 wifi_passwords.txt.encrypted
 *.log
+logs/*.log
 
 # OS
 Thumbs.db

@@ -12,10 +12,13 @@ import os
 import getpass
 
 from base64 import urlsafe_b64encode
+from logger_setup import get_logger
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet, InvalidToken
+
+logger = get_logger("wifi_decrypted")
 
 MAGIC = b'WIFI'
 SALT_SIZE = 16
@@ -40,8 +43,10 @@ def decrypt_blob(blob: bytes, password: str) -> bytes:
     key = derive_key(password.encode('utf-8'), salt)
     f = Fernet(key)
     try:
+        logger.info("Začínám dešifrování souboru.")
         return f.decrypt(token)
     except InvalidToken:
+        logger.error("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).")
         raise InvalidToken("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).")
 
 def main():
@@ -59,8 +64,10 @@ def main():
         blob = f.read()
 
     try:
+        logger.info(f"Začínám dešifrování souboru: {args.file}")
         plain = decrypt_blob(blob, pwd)
     except Exception as e:
+        logger.error(f"Chyba při dešifrování souboru {args.file}: {e}")
         print("Chyba při dešifrování:", e, file=sys.stderr)
         sys.exit(3)
     input("Stiskni Enter pro ukončení...")

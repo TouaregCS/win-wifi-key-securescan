@@ -5,11 +5,14 @@
 
 import subprocess, re, sys, os, argparse, getpass
 from base64 import urlsafe_b64encode
+from logger_setup import get_logger
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography.fernet import Fernet
 from cryptography.fernet import InvalidToken
+
+logger = get_logger("wifi_crypted")
 
 MAGIC = b'WIFI'   # identifikátor formátu
 SALT_SIZE = 16
@@ -20,12 +23,15 @@ def run_netsh(cmd):
     try:
         raw = subprocess.check_output(full_cmd, shell=True)
     except subprocess.CalledProcessError as e:
+        logger.error(f"Chyba při spuštění: {full_cmd}\nKód: {e.returncode}")
         raise RuntimeError(f"Chyba při spuštění: {full_cmd}\nKód: {e.returncode}") from e
 
     for enc in ("cp1250","cp850","cp852","cp866","cp1252","utf-8"):
         try:
+            logger.info(f"Trying to decode with encoding: {enc}")
             return raw.decode(enc)
-        except Exception:
+        except Exception as e:
+            logger.warning(f"Decoding with encoding {enc} failed: {e}")
             continue
     return raw.decode("utf-8", errors="replace")
 
@@ -73,12 +79,14 @@ def gather_text():
     for p in profiles:
         lines.append(f"SSID: {p}\n")
         try:
+            logger.info(f"Zpracovávám profil: {p}")
             pwd = get_profile_password(p)
             if pwd:
                 lines.append(f"Password: {pwd}\n")
             else:
                 lines.append("Password: (nebylo nalezeno / enterprise / chráněné)\n")
         except Exception as e:
+            logger.error(f"Chyba při čtení profilu {p}: {e}")
             lines.append(f"Password: (chyba při čtení: {e})\n")
         lines.append("\n")
     return "".join(lines)
@@ -109,8 +117,10 @@ def decrypt_file_to_bytes(blob: bytes, password: str) -> bytes:
     key = derive_key(password.encode('utf-8'), salt)
     f = Fernet(key)
     try:
+        logger.info("Začínám dešifrování souboru.")
         return f.decrypt(token)
     except InvalidToken as e:
+        logger.error("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).")
         raise InvalidToken("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).") from e
 
 def main():
@@ -127,8 +137,10 @@ def main():
         with open(args.decrypt, 'rb') as f:
             blob = f.read()
         try:
+            logger.info(f"Začínám dešifrování souboru: {args.decrypt}")
             plain = decrypt_file_to_bytes(blob, pwd)
         except Exception as e:
+            logger.error(f"Chyba při dešifrování souboru {args.decrypt}: {e}")
             print("Chyba při dešifrování:", e, file=sys.stderr)
             sys.exit(3)
         # vypíšeme na stdout (bez uložení)

@@ -2,3 +2,4 @@ cryptography>=40
 pyinstaller
 pyperclip
 colorama
+logging
