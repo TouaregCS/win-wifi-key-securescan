@@ -71,7 +71,7 @@ def main():
         print("Chyba při dešifrování:", e, file=sys.stderr)
         sys.exit(3)
     input("Stiskni Enter pro ukončení...")
-    return
+
 
     # Plaintext je bajtový obsah (utf-8). Pokusíme se dekódovat pro čitelné zobrazení.
     try:
@@ -82,7 +82,7 @@ def main():
             with open(args.out, 'wb') as f:
                 f.write(plain)
             print(f"Dešifrováno a uloženo do {args.out}")
-            return
+            
         else:
             # zapíšeme do stdout binárně
             sys.stdout.buffer.write(plain)
