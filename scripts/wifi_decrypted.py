@@ -12,7 +12,7 @@ import os
 import getpass
 
 from base64 import urlsafe_b64encode
-from logger_setup import get_logger
+from .logger_setup import get_logger
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
@@ -70,7 +70,7 @@ def main():
         logger.error(f"Chyba při dešifrování souboru {args.file}: {e}")
         print("Chyba při dešifrování:", e, file=sys.stderr)
         sys.exit(3)
-    input("Stiskni Enter pro ukončení...")
+    input("Stiskni ENTER pro zobrazení výsledku...")
 
 
     # Plaintext je bajtový obsah (utf-8). Pokusíme se dekódovat pro čitelné zobrazení.
@@ -82,7 +82,7 @@ def main():
             with open(args.out, 'wb') as f:
                 f.write(plain)
             print(f"Dešifrováno a uloženo do {args.out}")
-            
+
         else:
             # zapíšeme do stdout binárně
             sys.stdout.buffer.write(plain)

@@ -1,11 +1,24 @@
 import os
 import subprocess
+import sys
 from colorama import Fore, Style, init
-from scripts.logger_setup import get_logger
 
-logger = get_logger("main")
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+from scripts import logger_setup, wifi_crypted, wifi_decrypted
+
+
+logger = logger_setup.get_logger("main")
 
 init(autoreset=True)
+
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -22,20 +35,13 @@ def menu():
     print(Fore.CYAN + "-" * 50 + Style.RESET_ALL)
 
 def run_script(script_name):
-    try:
-        logger.info(f"Spouštím skript: {script_name}")
-        subprocess.run(
-            ['python', f"scripts/{script_name}"],
-            check=True,
-            text=True,
-            stdin=None,
-            stdout=None,
-            stderr=None
-        )
-    except subprocess.CalledProcessError as e:
-        logger.error(f"Chyba při spouštění {script_name}: {e}")
-        print(Fore.RED + f"Chyba při spouštění {script_name}: {e}" + Style.RESET_ALL)
-    input(Fore.BLUE + "\n Stiskněte Enter pro návrat do menu..." + Style.RESET_ALL)
+    if script_name == 'wifi_crypted.py':
+        wifi_crypted.main()
+    elif script_name == 'wifi_decrypted.py':
+        wifi_decrypted.main()
+    else:
+        print(Fore.RED + "Neznámý skript: " + script_name + Style.RESET_ALL)
+    input(Fore.GREEN + "\n Stiskněte ENTER pro návrat do menu..." + Style.RESET_ALL)
 
 def main():
     while True:
@@ -53,7 +59,7 @@ def main():
             break
         else:
             print(Fore.RED + "Neplatná volba. Zkuste to prosím znovu." + Style.RESET_ALL)
-            input(Fore.BLUE + "\n Stiskněte Enter pro pokračování..." + Style.RESET_ALL)
+            input(Fore.GREEN + "\n Stiskněte ENTER pro pokračování..." + Style.RESET_ALL)
 
 if __name__ == "__main__":
     main()
