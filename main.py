@@ -16,9 +16,9 @@ def banner():
     print(Fore.CYAN + "=" * 50 + Style.RESET_ALL)
 
 def menu():
-    print(Fore.YELLOW + "1" + Fore.WHITE + "Vyhledej a ulož Wi-Fi klíče z tohoto počítače")
-    print(Fore.YELLOW + "2" + Fore.WHITE + "Zobraz uložené Wi-Fi klíče")
-    print(Fore.YELLOW + "3" + Fore.WHITE + "Exit")
+    print(Fore.YELLOW + "1" + Fore.WHITE + " Vyhledej a ulož Wi-Fi klíče z tohoto počítače")
+    print(Fore.YELLOW + "2" + Fore.WHITE + " Zobraz uložené Wi-Fi klíče")
+    print(Fore.YELLOW + "3" + Fore.WHITE + " Ukonči program")
     print(Fore.CYAN + "-" * 50 + Style.RESET_ALL)
 
 def run_script(script_name):
@@ -35,7 +35,7 @@ def run_script(script_name):
     except subprocess.CalledProcessError as e:
         logger.error(f"Chyba při spouštění {script_name}: {e}")
         print(Fore.RED + f"Chyba při spouštění {script_name}: {e}" + Style.RESET_ALL)
-    input(Fore.BLUE + "\n Stiskněte Enter pro návrat do menu..." + Style.RESET_ALL)
+    input(Fore.GREEN + "\n Stiskněte ENTER pro návrat do menu ..." + Style.RESET_ALL)
 
 def main():
     while True:
@@ -50,10 +50,12 @@ def main():
             run_script('wifi_decrypted.py')
         elif choice == '3':
             print(Fore.GREEN + "\n Ukončuji program. Nashledanou!" + Style.RESET_ALL)
+            print(Fore.CYAN + "=" * 50 + Style.RESET_ALL)
+            logger.info("Program ukončen uživatelem.")
             break
         else:
             print(Fore.RED + "Neplatná volba. Zkuste to prosím znovu." + Style.RESET_ALL)
-            input(Fore.BLUE + "\n Stiskněte Enter pro pokračování..." + Style.RESET_ALL)
+            input(Fore.GREEN + "\n Stiskněte Enter pro pokračování..." + Style.RESET_ALL)
 
 if __name__ == "__main__":
     main()
