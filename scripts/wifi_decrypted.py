@@ -70,7 +70,7 @@ def main():
         logger.error(f"Chyba při dešifrování souboru {args.file}: {e}")
         print("Chyba při dešifrování:", e, file=sys.stderr)
         sys.exit(3)
-    input("Stiskni ENTER pro zobrazení výsledku...")
+    input("\n Stiskni ENTER pro zobrazení výsledku...")
 
 
     # Plaintext je bajtový obsah (utf-8). Pokusíme se dekódovat pro čitelné zobrazení.

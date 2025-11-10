@@ -73,8 +73,8 @@ def gather_text():
     if not profiles:
         return "Žádné Wi-Fi profily nebyly nalezeny.\n"
     lines = []
-    lines.append("Export Wi-Fi profilů a hesel\n")
-    lines.append("POZOR: obsahuje citlivé údaje. Uložte bezpečně.\n")
+    lines.append("Export Wi-Fi profilů a hesel\n\n")
+    lines.append("POZOR: obsahuje citlivé údaje. Uložte bezpečně.\n\n")
     lines.append("="*60 + "\n\n")
     for p in profiles:
         lines.append(f"SSID: {p}\n")
@@ -150,7 +150,7 @@ def main():
     # běžný mód: export + šifrování
     print("Shromažďuji Wi-Fi profily (může být potřeba spustit jako správce)...")
     plaintext = gather_text().encode('utf-8')
-    pwd = getpass.getpass("Zadej heslo pro šifrování (pečlivě si ho poznamenej): ")
+    pwd = getpass.getpass("Zadej heslo pro šifrování (pečlivě si ho zapamatuj): ")
     pwd2 = getpass.getpass("Potvrď heslo: ")
     if pwd != pwd2:
         print("Hesla se neshodují. Přerušuji.", file=sys.stderr); sys.exit(1)
@@ -158,7 +158,7 @@ def main():
     outfn = args.out
     with open(outfn, 'wb') as f:
         f.write(blob)
-    print(f"Hotovo. Šifrovaný výstup uložen do: {os.path.abspath(outfn)}")
+    print(f"\n\n HOTOVO.\n\n Šifrovaný výstup uložen do: {os.path.abspath(outfn)}. \n\n K dešifrování použijte vámi zvolené heslo.")
 
 if __name__ == "__main__":
     main()
