@@ -1,6 +1,9 @@
 import os
 import subprocess
 from colorama import Fore, Style, init
+from scripts.logger_setup import get_logger
+
+logger = get_logger("main")
 
 init(autoreset=True)
 
@@ -20,8 +23,17 @@ def menu():
 
 def run_script(script_name):
     try:
-        subprocess.run(['python', script_name], check=True)
+        logger.info(f"Spouštím skript: {script_name}")
+        subprocess.run(
+            ['python', f"scripts/{script_name}"],
+            check=True,
+            text=True,
+            stdin=None,
+            stdout=None,
+            stderr=None
+        )
     except subprocess.CalledProcessError as e:
+        logger.error(f"Chyba při spouštění {script_name}: {e}")
         print(Fore.RED + f"Chyba při spouštění {script_name}: {e}" + Style.RESET_ALL)
     input(Fore.BLUE + "\n Stiskněte Enter pro návrat do menu..." + Style.RESET_ALL)
 
@@ -33,9 +45,9 @@ def main():
         choice = input(Fore.GREEN + "\n Vyberte možnost (1-3): " + Style.RESET_ALL)
 
         if choice == '1':
-            run_script('scripts\wifi_crypted.py')
+            run_script('wifi_crypted.py')
         elif choice == '2':
-            run_script('scripts\wifi_decrypted.py')
+            run_script('wifi_decrypted.py')
         elif choice == '3':
             print(Fore.GREEN + "\n Ukončuji program. Nashledanou!" + Style.RESET_ALL)
             break
