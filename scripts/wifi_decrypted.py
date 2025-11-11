@@ -49,6 +49,23 @@ def decrypt_blob(blob: bytes, password: str) -> bytes:
         logger.error("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).")
         raise InvalidToken("Neplatné heslo nebo poškozený soubor (dešifrování selhalo).")
 
+# Pro GUI nebo jiné použití: funkce, která dešifruje soubor a vrátí text    
+def decrypt_file(file_path: str, password: str) -> str:
+    """Dešifruje zadaný soubor a vrátí obsah jako text (UTF-8)."""
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"Soubor nenalezen: {file_path}")
+
+    with open(file_path, 'rb') as f:
+        blob = f.read()
+
+    plain = decrypt_blob(blob, password)
+
+    try:
+        return plain.decode('utf-8')
+    except UnicodeDecodeError:
+        logger.warning("Výsledek není UTF-8 text – vracím raw string.")
+        return str(plain)
+
 def main():
     parser = argparse.ArgumentParser(description="Dešifruje Wi-Fi export vytvořený wifi_encrypt.py")
     parser.add_argument('-f','--file', default='wifi_passwords.txt.encrypted', help='Šifrovaný vstupní soubor')
