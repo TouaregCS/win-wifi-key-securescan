@@ -49,6 +49,6 @@ Umožňuje bezpečně zálohovat a obnovit Wi-Fi přihlašovací údaje pomocí 
 ## 💬 Autor
 
 **TouaregCS**
-![GitHub profile link for TouaregCS](https://github.com/TouaregCS)
+[GitHub profile TouaregCS](https://github.com/TouaregCS/)
 
 ![CLI Menu](https://private-user-images.githubusercontent.com/114004388/512818066-afc08b7d-ecb0-41af-ae6b-85183ed7df55.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjI4NzgxNDIsIm5iZiI6MTc2Mjg3Nzg0MiwicGF0aCI6Ii8xMTQwMDQzODgvNTEyODE4MDY2LWFmYzA4YjdkLWVjYjAtNDFhZi1hZTZiLTg1MTgzZWQ3ZGY1NS5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTExMVQxNjE3MjJaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0wMjJmMTI2NzczYWQ0NGQ5ZTc5NzUzNDQyYmU0NzgzMjRhYzI3NTBjNWFmMTBiMDg1NDBhNTQ0ZDFmODUwMjE4JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.aqF7-XW4eDVJUny7e5o6YuzKKDRlmhw6MWXgJ7TQPCw)
