@@ -9,11 +9,11 @@ It allows secure backup and recovery of Wi-Fi credentials using **strong AES-256
 
 ## 🔒 Security
 
-    - The password is never stored!
-    - Encryption uses:
+- The password is never stored!
+- Encryption uses:
         - ```PBKDF2HMAC``` (390k iterations, 16B salt)
         - ```AES-256``` (Fernet)
-    - The output file contains no readable data!
+- The output file contains no readable data!
 
 ## ⚠️ Disclaimer
 
@@ -40,9 +40,10 @@ Umožňuje bezpečně zálohovat a obnovit Wi-Fi přihlašovací údaje pomocí 
 
 ## 🔐 Použité knihovny
 
-    - ```cryptography``` - bezpečné šifrování pomocí Fernet (AES-256)
-    - ```colorama``` - barevný výstup v terminálu
-    - ```logging``` - záznam událostí do logu
+- ```cryptography``` - bezpečné šifrování pomocí Fernet (AES-256)
+- ```colorama``` - barevný výstup v terminálu
+- ```logging``` - záznam událostí do logu
+
 ---
 
 ## 💬 Autor
