@@ -26,9 +26,46 @@ By using Wi-Fi Key SecureScan, you agree to the following:
 > [!WARNING]
 > This project was created to **help users understand and manage their own network credentials securely**, not to be used for any malicious or unauthorized purpose.
 
+### 📜 License
+
+⚖️ **MIT License**
+Use responsibly - only for backup with authorized access.
+
 ---
 Sada nástrojů pro export, šifrování a dešifrování uložených Wi-Fi hesel v systému **Windows**.  
 Umožňuje bezpečně zálohovat a obnovit Wi-Fi přihlašovací údaje pomocí **silného šifrování AES-256 (Fernet)**.
+
+> [!CAUTION]
+>Tento nástroj je určen výhradně pro osobní použití.
+>Nepoužívejte jej k získávání přístupových údajů z cizích zařízení bez souhlasu jejich vlastníka.
+
+## 🚀 Spuštění programu ve Windows
+
+💾 **Stáhněte připravený `.exe` a `.sha256` z GitHub Releases :** [v1.0.0-alpha](https://github.com/TouaregCS/win-wifi-key-securescan/releases/tag/v1.0.0-alpha)
+
+🛡️ **Ověřte integritu pomocí hash souboru**
+Otevři PowerShell ve stejné složce, kde je ```WifiScript.exe``` a vlož kód:
+
+~~~powershell
+# výpočet SHA-256
+$File = "WifiScan.exe"
+$Expected = (Get-Content "$File.sha256").Split(" ")[0]
+$Actual = (Get-FileHash -Algorithm SHA256 -Path $File).Hash
+
+if ($Expected -eq $Actual) {
+    Write-Host "✅ Soubor je v pořádku – hash odpovídá." -ForegroundColor Green
+} else {
+    Write-Host "❌ POZOR: Hash se neshoduje!" -ForegroundColor Red
+}
+~~~
+
+## 🔒 Bezpečnost
+
+- Heslo, které si zvolíte, se nikam neukládá.
+- Šifrování používá:
+        - ```PBKDF2HMAC``` (390k iterací, sůl 16B)
+        - ```AES-256``` (Fernet)
+- Výstupní soubor neobsahuje žádné čitelné údaje
 
 ## 🧠 Architektura
 
@@ -43,6 +80,11 @@ Umožňuje bezpečně zálohovat a obnovit Wi-Fi přihlašovací údaje pomocí 
 - ```cryptography``` - bezpečné šifrování pomocí Fernet (AES-256)
 - ```colorama``` - barevný výstup v terminálu
 - ```logging``` - záznam událostí do logu
+
+### 📜 Licence
+
+Licence ⚖️ **MIT** - volně k použití, úpravám i komerčnímu nasazení.
+Používej zodpovědně — pouze pro osobní nebo firemní účely se souhlasem správce systému.
 
 ---
 
