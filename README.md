@@ -11,8 +11,8 @@ It allows secure backup and recovery of Wi-Fi credentials using **strong AES-256
 
 - The password is never stored!
 - Encryption uses:
-        - ```PBKDF2HMAC``` (390k iterations, 16B salt)
-        - ```AES-256``` (Fernet)
+        + ```PBKDF2HMAC``` (390k iterations, 16B salt)
+        + ```AES-256``` (Fernet)
 - The output file contains no readable data!
 
 ## ⚠️ Disclaimer
@@ -43,8 +43,8 @@ Umožňuje bezpečně zálohovat a obnovit Wi-Fi přihlašovací údaje pomocí 
 
 💾 **Stáhněte připravený `.exe` a `.sha256` z GitHub Releases :** [v1.0.0-alpha](https://github.com/TouaregCS/win-wifi-key-securescan/releases/tag/v1.0.0-alpha)
 
-🛡️ **Ověřte integritu pomocí hash souboru**
-Otevři PowerShell ve stejné složce, kde je ```WifiScript.exe``` a vlož kód:
+🛡️ **Ověřte integritu pomocí hash souboru**\
+Otevři PowerShell ve stejné složce, kde je ```WifiScript.exe``` i ```WifiScan.exe.sha256``` a vlož kód:
 
 ~~~powershell
 # výpočet SHA-256
@@ -57,14 +57,15 @@ if ($Expected -eq $Actual) {
 } else {
     Write-Host "❌ POZOR: Hash se neshoduje!" -ForegroundColor Red
 }
+# Spustit klávesou ENTER
 ~~~
 
 ## 🔒 Bezpečnost
 
 - Heslo, které si zvolíte, se nikam neukládá.
 - Šifrování používá:
-        - ```PBKDF2HMAC``` (390k iterací, sůl 16B)
-        - ```AES-256``` (Fernet)
+        + ```PBKDF2HMAC``` (390k iterací, sůl 16B)
+        + ```AES-256``` (Fernet)
 - Výstupní soubor neobsahuje žádné čitelné údaje
 
 ## 🧠 Architektura
@@ -84,7 +85,7 @@ if ($Expected -eq $Actual) {
 ### 📜 Licence
 
 Licence ⚖️ **MIT** - volně k použití, úpravám i komerčnímu nasazení.
-Používej zodpovědně — pouze pro osobní nebo firemní účely se souhlasem správce systému.
+Používej zodpovědně - pouze pro osobní nebo firemní účely se souhlasem správce systému.
 
 ---
 
