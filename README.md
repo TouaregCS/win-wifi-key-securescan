@@ -11,8 +11,8 @@ It allows secure backup and recovery of Wi-Fi credentials using **strong AES-256
 
 - The password is never stored!
 - Encryption uses:
-        + ```PBKDF2HMAC``` (390k iterations, 16B salt)
-        + ```AES-256``` (Fernet)
+  - ```PBKDF2HMAC``` (390k iterations, 16B salt)
+  - ```AES-256``` (Fernet)
 - The output file contains no readable data!
 
 ## ⚠️ Disclaimer
@@ -64,8 +64,8 @@ if ($Expected -eq $Actual) {
 
 - Heslo, které si zvolíte, se nikam neukládá.
 - Šifrování používá:
-        + ```PBKDF2HMAC``` (390k iterací, sůl 16B)
-        + ```AES-256``` (Fernet)
+  - ```PBKDF2HMAC``` (390k iterací, sůl 16B)
+  - ```AES-256``` (Fernet)
 - Výstupní soubor neobsahuje žádné čitelné údaje
 
 ## 🧠 Architektura
@@ -88,6 +88,17 @@ Licence ⚖️ **MIT** - volně k použití, úpravám i komerčnímu nasazení.
 Používej zodpovědně - pouze pro osobní nebo firemní účely se souhlasem správce systému.
 
 ---
+
+## Používám GitHub pod protestem
+
+Opustit GitHub je těžké, protože jsme na něm závislí (**vendor lock-in**).
+
+Je to náš *Facebook pro programátory* a nejpohodlnější místo pro práci na FOSS projektech. Odchod bolí hlavně proto, že je to hlavní místo, kde spolupracujeme s kolegy a prezentujeme svou práci potenciálním zaměstnavatelům. Některé školy navíc jeho používání dokonce vyžadují.
+
+GitHub je **uzavřený systém plný obchodních tajemství**, plně ve vlastnictví **Microsoftu**. Doporučuji přečíst si o kampani
+[Give up GitHub](https://GiveUpGitHub.org) od
+[Software Freedom Conservancy](https://sfconservancy.org) pro pochopení proč GitHub není ideální místo pro FOSS projekty.\\
+![Logo of the GiveUpGitHub campaign](https://sfconservancy.org/static/img/GiveUpGitHub.png)
 
 ## 💬 Autor
 
