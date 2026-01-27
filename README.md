@@ -81,6 +81,7 @@ if ($Expected -eq $Actual) {
 - ```cryptography``` - bezpečné šifrování pomocí Fernet (AES-256)
 - ```colorama``` - barevný výstup v terminálu
 - ```logging``` - záznam událostí do logu
+- ```PyQt6``` - GUI
 
 ### 📜 Licence
 
