@@ -12,7 +12,7 @@ import os
 import getpass
 
 from base64 import urlsafe_b64encode
-from logger_setup import get_logger
+from scripts.logger_setup import get_logger
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
