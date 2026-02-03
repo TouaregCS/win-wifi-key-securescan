@@ -24,7 +24,7 @@ jobs:
           pip install poetry
 
       - name: Install dependencies
-        run: poetry install
+        run: poetry install --no-root
 
       - name: Build EXE with PyInstaller
         run: poetry run pyinstaller --noconsole --onefile --uac-admin --clean --add-data "scripts;scripts" --add-data "assets;assets" --icon=assets/klic.ico --name "WinWifiScan" main.py
