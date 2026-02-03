@@ -1,6 +1,7 @@
 [project]
 name = "win-wifi-key-securescan"
 version = "1.0.0"
+package-mode = false
 description = "About"
 authors = [
     {name = "TouaregCS",email = "touareg.netvor@gmail.com"}
