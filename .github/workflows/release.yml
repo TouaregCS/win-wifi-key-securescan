@@ -20,16 +20,14 @@ jobs:
 
       - name: Install Poetry
         run: |
-          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
-          # Přidání cesty do PATH pro aktuální běh
-          echo "$env:USERPROFILE\AppData\Roaming\Python\Scripts" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          python -m pip install --upgrade pip
+          pip install poetry
 
       - name: Install dependencies
-        # Pokud 'poetry' stále nejde, použijeme bezpečnější volání přes python:
-        run: python -m poetry install
+        run: poetry install
 
       - name: Build EXE with PyInstaller
-        run: python -m poetry run pyinstaller --noconsole --onefile --uac-admin --clean --add-data "scripts;scripts" --add-data "assets;assets" --icon=assets/klic.ico --name "WinWifiScan" main.py
+        run: poetry run pyinstaller --noconsole --onefile --uac-admin --clean --add-data "scripts;scripts" --add-data "assets;assets" --icon=assets/klic.ico --name "WinWifiScan" main.py
 
       - name: Generate SHA-256
         shell: pwsh
