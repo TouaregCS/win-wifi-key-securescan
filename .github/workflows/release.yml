@@ -1,0 +1,46 @@
+name: Build and Release EXE (Poetry)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Poetry
+        run: |
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+          
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Build EXE with PyInstaller
+        # Tady používáme 'poetry run', aby PyInstaller viděl balíčky z venv
+        run: |
+          poetry run pyinstaller --noconsole --onefile --uac-admin --clean --add-data "scripts;scripts" --add-data "assets;assets" --icon=assets/klic.ico --name "WinWifiScan" main.py
+
+      - name: Generate SHA-256
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash ./dist/WinWifiScan.exe -Algorithm SHA256).Hash.ToLower()
+          "$hash *WinWifiScan.exe" | Out-File -Encoding ascii ./dist/WinWifiScan.exe.sha256
+
+      - name: Upload Release Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/WinWifiScan.exe
+            dist/WinWifiScan.exe.sha256
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -3,7 +3,7 @@ import os
 import subprocess
 from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                              QHBoxLayout, QPushButton, QTextEdit, QLineEdit, 
-                             QLabel, QFileDialog, QMessageBox, QFrame)
+                             QLabel, QFileDialog, QMessageBox, QFrame, QGridLayout)
 from PyQt6.QtGui import QIcon, QFont
 from PyQt6.QtCore import Qt
 from colorama import Fore, Style, init
@@ -34,19 +34,38 @@ class WifiScanGUI(QMainWindow):
         main_layout = QVBoxLayout(central_widget)
 
         # --- 1. KROK: SKENOVÁNÍ ---
+        scan_btn_layout = QGridLayout()
+
         self.btn_scan = QPushButton("🔍 1. SPUSTIT SKENOVÁNÍ (Zobrazit nález)")
         self.btn_scan.setStyleSheet("""
-            QPushButton { background-color: #2c3e50; color: white; height: 50px; font-weight: bold; font-size: 14px; border-radius: 5px; }
+            QPushButton { background-color: #2c3e50; color: white; height: 50px; font-weight: bold; font-size: 14px; border-radius: 5px; border: 2px solid #000000}
             QPushButton:hover { background-color: #34495e; }
         """)
         self.btn_scan.clicked.connect(self.action_just_scan)
-        main_layout.addWidget(self.btn_scan)
+
+        self.btn_help = QPushButton("❓ Nápověda")
+        self.btn_help.setStyleSheet("""
+            QPushButton { background-color: #f39c12; color: #000000; height: 50px; font-weight: bold; font-size: 16px; border-radius: 5px; border: 2px solid #000000}
+            QPushButton:hover { background-color: #e67e22; }
+        """)
+        self.btn_help.clicked.connect(self.show_help)
+
+        scan_btn_layout.addWidget(self.btn_scan, 0, 0, 1, 5)
+        scan_btn_layout.addWidget(self.btn_help, 0, 6)
+
+        main_layout.addLayout(scan_btn_layout)
 
         # --- KONZOLE PRO ZOBRAZENÍ VÝSLEDKŮ ---
         self.log_display = QTextEdit()
         self.log_display.setReadOnly(False) # Povolíme editaci, kdyby chtěl uživatel něco smazat před uložením
         self.log_display.setFont(QFont("Consolas", 10))
-        self.log_display.setStyleSheet("background-color: #1e1e1e; color: #d4d4d4; padding: 10px; border: 2px solid #333;")
+        self.log_display.setStyleSheet("""
+                        background-color: #1e1e1e; 
+                        color: #55ff55; /* Svítivě zelená */
+                        padding: 10px; 
+                        border: 2px solid #333;
+                        selection-background-color: #2c3e50;
+                        """)
         main_layout.addWidget(self.log_display)
 
         # --- 2. KROK: ZABEZPEČENÍ ---
@@ -56,38 +75,69 @@ class WifiScanGUI(QMainWindow):
         
         save_layout.addWidget(QLabel("<b>2. ZABEZPEČENÍ NÁLEZU:</b>"))
         
-        h_pass_layout = QHBoxLayout()
+        h_pass_layout = QVBoxLayout()
         self.password_input = QLineEdit()
         self.password_input.setPlaceholderText("Zadejte šifrovací heslo...")
         self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password_input.setMinimumWidth(200)
         
         self.password_confirm = QLineEdit()
         self.password_confirm.setPlaceholderText("Potvrďte heslo...")
         self.password_confirm.setEchoMode(QLineEdit.EchoMode.Password)
+        self.password_confirm.setMinimumWidth(200)
 
-        h_pass_layout.addWidget(self.password_input)
-        h_pass_layout.addWidget(self.password_confirm)
+        h_pass_layout.addWidget(self.password_input, alignment=Qt.AlignmentFlag.AlignCenter)
+        h_pass_layout.addWidget(self.password_confirm, alignment=Qt.AlignmentFlag.AlignCenter)
         save_layout.addLayout(h_pass_layout)
 
+        h_btn_layout = QHBoxLayout()
         self.btn_save = QPushButton("💾 Zašifrovat a uložit do souboru")
         self.btn_save.setStyleSheet("""
-            QPushButton { background-color: #27ae60; color: white; height: 48px; font-weight: bold; font-size: 14px; margin-top: 5px; }
+            QPushButton { background-color: #27ae60; color: #000000; height: 40px; font-weight: bold; font-size: 18px; margin-top: 5px; border: 2px solid #000000}
             QPushButton:hover { background-color: #2ecc71; }
         """)
         self.btn_save.clicked.connect(self.action_encrypt_and_save)
-        save_layout.addWidget(self.btn_save)
-
+        
         self.btn_decrypt = QPushButton("🔓 Dešifrovat existující soubor")
         self.btn_decrypt.setStyleSheet("""
-            QPushButton { background-color: #c0392b; color: white; height: 48px; font-weight: bold; font-size: 14px; margin-top: 5px; }
+            QPushButton { background-color: #c0392b; color: #000000; height: 40px; font-weight: bold; font-size: 18px; margin-top: 5px; border: 2px solid #000000}
             QPushButton:hover { background-color: #e74c3c; }
         """)
         self.btn_decrypt.clicked.connect(self.action_decrypt_existing)
-        save_layout.addWidget(self.btn_decrypt)
+        
+        h_btn_layout.addWidget(self.btn_save)
+        h_btn_layout.addWidget(self.btn_decrypt)
+        save_layout.addLayout(h_btn_layout)
         
         main_layout.addWidget(self.save_frame)
 
+        self.apply_outline(self.btn_scan)
+        self.apply_outline(self.btn_help)
+        self.apply_outline(self.btn_save)
+        self.apply_outline(self.btn_decrypt)
+
+    def apply_outline(self, widget):
+        """Pomocná metoda pro přidání 'tvrdého' stínu, který simuluje ohraničení textu"""
+        from PyQt6.QtWidgets import QGraphicsDropShadowEffect
+        from PyQt6.QtGui import QColor
+
+        effect = QGraphicsDropShadowEffect()
+        effect.setBlurRadius(3)       # Ostrý okraj
+        effect.setXOffset(3)          # Posun pro efekt tloušťky
+        effect.setYOffset(3)
+        effect.setColor(QColor(0, 0, 0, 255)) # Černá barva "okraje"
+        widget.setGraphicsEffect(effect)
+
     # --- LOGIKA ---
+    def show_help(self):
+        """Zobrazí nápovědu uživateli"""
+        help_text = (
+            "1. Klikněte na 'SPUSTIT SKENOVÁNÍ' pro získání Wi-Fi profilů a hesel z vašeho systému.\n"
+            "2. Zadejte silné heslo do obou polí pro zabezpečení dat.\n"
+            "3. Klikněte na 'Zašifrovat a uložit do souboru' pro uložení šifrovaného nálezu.\n"
+            "4. Pro dešifrování existujícího souboru klikněte na 'Dešifrovat existující soubor' a zadejte heslo."
+        )
+        QMessageBox.information(self, "Nápověda", help_text)
 
     def action_just_scan(self):
         """Pouze vytáhne data a ukáže je v okně"""
